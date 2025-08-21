@@ -1,0 +1,39 @@
+typedef struct {
+    int customer;
+    int serve_time;
+} Order;
+
+int compare(const void *a, const void *b) {
+    Order *orderA = (Order *)a;
+    Order *orderB = (Order *)b;
+
+    if (orderA->serve_time == orderB->serve_time) {
+        
+        return orderA->customer - orderB->customer;
+    }
+    return orderA->serve_time - orderB->serve_time;
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+
+    Order orders[n];
+
+    for (int i = 0; i < n; i++) {
+        int order_num, prep_time;
+        scanf("%d %d", &order_num, &prep_time);
+        orders[i].customer = i + 1;
+        orders[i].serve_time = order_num + prep_time;
+    }
+
+    qsort(orders, n, sizeof(Order), compare);
+
+    for (int i = 0; i < n; i++) {
+        printf("%d", orders[i].customer);
+        if (i != n - 1) printf(" ");
+    }
+    printf("\n");
+
+    return 0;
+}
