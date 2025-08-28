@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+int pylons(int k, int arr[], int n) {
+    int plants = 0;
+    int i = 0; // next city to cover (0-based)
+
+    while (i < n) {
+        // Try to place a plant as far right as possible that still covers city i
+        int right = i + k - 1;
+        if (right >= n) right = n - 1;
+
+        int placed = -1;
+        int leftLimit = i - (k - 1);
+        if (leftLimit < 0) leftLimit = 0;
+
+        // Scan left from 'right' down to 'leftLimit' to find a suitable city (arr[pos] == 1)
+        for (int pos = right; pos >= leftLimit; --pos) {
+            if (arr[pos] == 1) {
+                placed = pos;
+                break;
+            }
+        }
+
+        if (placed == -1) {
+            // No place to put a plant to cover city i
+            return -1;
+        }
+
+        // Place the plant at 'placed'
+        plants++;
+
+        // Next uncovered city is just beyond this plant's right coverage
+        i = placed + k; // since coverage is up to placed + (k - 1)
+    }
+
+    return plants;
+}
+
+int main(void) {
+    int n, k;
+    if (scanf("%d %d", &n, &k) != 2) return 0;
+
+    int arr[n];
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &arr[i]);
+    }
+
+    int result = pylons(k, arr, n);
+    printf("%d\n", result);
+    return 0;
+}
