@@ -1,0 +1,18 @@
+#include <stdio.h>
+
+int main() {
+    long long r, c;
+    scanf("%lld %lld", &r, &c);
+
+    long long result;
+    if (r % 2 == 1) {
+        
+        result = ((r - 1) / 2) * 10 + 2 * (c - 1);
+    } else {
+        
+        result = ((r - 1) / 2) * 10 + 2 * (c - 1) + 1;
+    }
+
+    printf("%lld\n", result);
+    return 0;
+}
